@@ -1,0 +1,17 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h3 {
+    font-weight: 400;
+}
+
+.google-log-in {
+    text-decoration: none;
+    background-color: rgb(221, 221, 255);
+    border: 1px solid black;
+    border-radius: 2px;
+    margin: 0 10px;
+    color: black;
+    padding: 2px;
+}
