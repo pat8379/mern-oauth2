@@ -1,5 +1,3 @@
-# mern-with-auth
+# mern with Google OAuth2.0
 
-An extension of [nba-lineup-maker](https://github.com/pat8379/nba-lineup-maker) repository with authentication using passport.js and express-session added. 
-
-Deployed on https://mern-auth-lineup-maker.herokuapp.com/
+Trying out Google's OAuth2.0 with passport.js
