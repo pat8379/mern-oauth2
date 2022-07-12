@@ -20,7 +20,7 @@ playersRouter.get('/account/specificPlayer', asyncHandler(async (req,res,next) =
     const userSpecific = await userPlayer.find({ user: req.user.id })
         .populate('user', ['displayName', 'firstName'])
         .lean()
-    // console.log(userSpecific)
+    // console.log(userSpecific) 
     res.send(userSpecific)
     // res.json("Bithc")
 }))

@@ -41,9 +41,11 @@ usersRouter.get('/count', (req, res, next) => {
 })
 
 usersRouter.post('/logout', (req,res,next) => {
+    req.session.destroy()
     req.logout(req.user, err => {
         if(err) return next(err)
-        res.send("log out")
+        // req.session.destroy()
+        // res.send("log out")
     })
     // res.send("Log out")
     // res.redirect('/login');

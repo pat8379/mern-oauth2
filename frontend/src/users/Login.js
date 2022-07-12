@@ -44,7 +44,7 @@ function Login() {
       <input placeholder='password' value={password} required onChange={(e) => setPassword(e.target.value)}/>
       <button onClick={handleSubmit}>Login</button>
       {errMsg && <p>{errMsg}</p>}
-      <a class="google-log-in" href='https://mern-google-oauth2.herokuapp.com/auth/google'>Log in with google</a>
+      <a class="google-log-in" href='/auth/google'>Log in with google</a>
     </div>
   )
 }

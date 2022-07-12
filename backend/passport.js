@@ -1,23 +1,23 @@
 const passport = require('passport');
-// const LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const User = require('./models/usersModel')
 const OAuth = require('./models/oAuthModel')
 const bcrypt = require('bcryptjs')
 
-// const strategy = new LocalStrategy({usernameField: 'username', passwordField: 'password'}, async (username, password, done) => {
-//     try {
-//         const user = await User.findOne({username: username})
-//         if (user && (await bcrypt.compare(password, user.password))) {
-//             return done(null, user);
-//         } else {
-//             return done(null, false);
-//         }        
-//     } catch (error) {
-//         done(error)
-//     }
+const locals = new LocalStrategy({usernameField: 'username', passwordField: 'password'}, async (username, password, done) => {
+    try {
+        const user = await User.findOne({username: username})
+        if (user && (await bcrypt.compare(password, user.password))) {
+            return done(null, user);
+        } else {
+            return done(null, false);
+        }        
+    } catch (error) {
+        done(error)
+    }
 
-// })
+})
 
 const strategy = new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -48,16 +48,39 @@ const strategy = new GoogleStrategy({
     }
   })
 
-passport.use(strategy);
+passport.use(locals)
+passport.use(strategy); 
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
-passport.deserializeUser((userId, done) => {
-    OAuth.findById(userId)
-        .then((user) => {
-            done(null, user);
-        })
-        .catch(err => done(err))
+// need to decide between User and OAuth for the model
+
+passport.deserializeUser(async (userId, done) => {
+    // console.log(req.user)
+    // console.log(userId)
+    const user = await User.findById(userId)
+    if (user) {
+        done(null,user)
+    } else {
+        const oauth = await OAuth.findById(userId)
+        if (oauth) {
+            done(null, oauth)
+        } else {
+            done(err)
+        }
+    }
+        // function (err, user) {
+        // if(err)
+        //     done(err);
+        // if(user) {
+        //     done(null, user);
+        // }
+        // }
+        // )
+        // .then((user) => {
+        //     done(null, user);
+        // })
+        // .catch(err => done(err))
 });
