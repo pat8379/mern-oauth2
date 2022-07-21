@@ -23,7 +23,8 @@ const sessionStore = MongoStore.create({ mongoUrl: process.env.ATLAS_URI, collec
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    // saveUninitialized previously true
     store: sessionStore,
     cookie: {
         maxAge: 1000 * 60 * 60
